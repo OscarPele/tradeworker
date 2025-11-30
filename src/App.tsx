@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { getMarginAccount, type MarginAccount } from './api/binanceApi'
+import Liquidity from './components/liquidity/liquidity'
+import MarketContextCard from './components/market-context/marketContext'
+import Orders from './components/orders/orders'
+import OpenOrders from './components/open-orders/openOrders'
+
+const BINANCE_WS_URL = 'wss://stream.binance.com:9443/ws/btceur@miniTicker'
 
 function formatEur(value: number) {
   return new Intl.NumberFormat('es-ES', {
@@ -41,24 +47,27 @@ function App() {
 
   // WebSocket a Binance para precio BTCEUR en tiempo real
   useEffect(() => {
-    const ws = new WebSocket(
-      'wss://stream.binance.com:9443/ws/btceur@miniTicker',
-    )
+    let isActive = true
+    const ws = new WebSocket(BINANCE_WS_URL)
 
-    ws.onopen = () => {
+    const handleOpen = () => {
+      if (!isActive) return
       setWsStatus('open')
     }
 
-    ws.onerror = (event) => {
+    const handleError = (event: Event) => {
+      if (!isActive) return
       console.error('Error WebSocket BTCEUR', event)
       setWsStatus('error')
     }
 
-    ws.onclose = () => {
+    const handleClose = () => {
+      if (!isActive) return
       setWsStatus('closed')
     }
 
-    ws.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
+      if (!isActive) return
       try {
         const data = JSON.parse(event.data)
         // miniTicker: campo c = último precio
@@ -71,8 +80,29 @@ function App() {
       }
     }
 
+    ws.addEventListener('open', handleOpen)
+    ws.addEventListener('error', handleError)
+    ws.addEventListener('close', handleClose)
+    ws.addEventListener('message', handleMessage)
+
     return () => {
-      ws.close()
+      isActive = false
+      ws.removeEventListener('open', handleOpen)
+      ws.removeEventListener('error', handleError)
+      ws.removeEventListener('close', handleClose)
+      ws.removeEventListener('message', handleMessage)
+
+      // Evita el cierre prematuro en modo Strict (efectos dobles)
+      if (ws.readyState === WebSocket.CONNECTING) {
+        const shutdown = () => ws.close(1000, 'cleanup')
+        ws.addEventListener('open', shutdown, { once: true })
+        ws.addEventListener('error', shutdown, { once: true })
+        return
+      }
+
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close(1000, 'cleanup')
+      }
     }
   }, [])
 
@@ -84,25 +114,28 @@ function App() {
 
   return (
     <main className="page">
-      <section className="card">
-        <p className="eyebrow">tradeworker</p>
-        <h1>Balance de cuenta de margen</h1>
-        <p className="lead">
-          Se muestra la equidad total de tu cuenta de margen en euros, usando el
-          precio BTCEUR en tiempo real de Binance.
-        </p>
-
-        <div className="status-row">
-          {loading && <p className="status">Cargando balance...</p>}
-          {error && <p className="status status--error">{error}</p>}
+      <section className="card card--tight balance-card">
+        <div className="card-head">
+          <h2 className="card-title">Balance</h2>
+          <span className={`pill pill--${wsStatus}`}>
+            BTCEUR{' '}
+            {btcEurPrice != null && !Number.isNaN(btcEurPrice)
+              ? formatEur(btcEurPrice)
+              : '–'}
+          </span>
         </div>
+
+        {(loading || error) && (
+          <div className="status-row">
+            {loading && <p className="status">Cargando...</p>}
+            {error && <p className="status status--error">{error}</p>}
+          </div>
+        )}
 
         {showBalance && (
           <div className="balance-panel">
-            <div className="balance-main">
-              <p className="balance-label">
-                Equidad total (valor aproximado en EUR)
-              </p>
+            <div className="stat-block">
+              <p className="balance-label">Equity</p>
               <p className="balance-value">
                 {netEur != null && btcEurPrice != null
                   ? formatEur(netEur)
@@ -116,19 +149,10 @@ function App() {
                   ? ` · ${btcEurPrice.toFixed(2)} €/BTC`
                   : ''}
               </p>
-
-              <div className="price-status">
-                <span className={`pill pill--${wsStatus}`}>
-                  WS BTCEUR:{' '}
-                  {btcEurPrice != null && !Number.isNaN(btcEurPrice)
-                    ? formatEur(btcEurPrice)
-                    : '–'}
-                </span>
-              </div>
             </div>
 
             <div className="assets-list">
-              <p className="assets-title">Activos en margen (netos ≠ 0):</p>
+              <p className="assets-title">Activos netos</p>
               <ul>
                 {account!.userAssets
                   .filter((a) => Number(a.netAsset) !== 0)
@@ -145,6 +169,18 @@ function App() {
           </div>
         )}
       </section>
+      <div className="liquidity-card">
+        <Liquidity />
+      </div>
+      <div className="orders-card">
+        <Orders />
+      </div>
+      <div className="open-orders-card">
+        <OpenOrders />
+      </div>
+      <div className="market-context-card">
+        <MarketContextCard />
+      </div>
     </main>
   )
 }

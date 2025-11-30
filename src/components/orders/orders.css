@@ -1,0 +1,219 @@
+.orders-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.side-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.side-btn {
+  border: 1px solid #243b65;
+  background: #0f0f0f;
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.side-btn--active {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+  color: #befae3;
+}
+
+.orders-row {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.orders-label {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.orders-input {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #243b65;
+  background: #0f0f0f;
+  color: #f9fafb;
+  font-size: 1rem;
+}
+
+.orders-input:focus {
+  outline: 1px solid #22c55e;
+}
+
+.orders-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #9ca3af;
+}
+
+.orders-summary {
+  border: 1px solid #243b65;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  background: #0b0b0b;
+}
+
+.orders-summary-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.92rem;
+  color: #e5e7eb;
+}
+
+.orders-summary-text {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #f9fafb;
+}
+
+.orders-error {
+  margin: 0.35rem 0 0;
+  color: #fca5a5;
+  font-size: 0.92rem;
+}
+
+.orders-result {
+  margin-top: 0.5rem;
+  border-top: 1px solid #243b65;
+  padding-top: 0.4rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.orders-result-title {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+}
+
+.orders-result-line {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.orders-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.orders-btn {
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #243b65;
+  background: #0f0f0f;
+  color: #e5e7eb;
+}
+
+.orders-btn--ghost {
+  color: #9ca3af;
+}
+
+.orders-btn--primary {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  color: #c6f6d5;
+}
+
+.pill--side-long {
+  border-color: #22c55e;
+  color: #c6f6d5;
+}
+
+.pill--side-short {
+  border-color: #ef4444;
+  color: #fecdd3;
+}
+
+.pill--side-buy {
+  border-color: #22c55e;
+  color: #c6f6d5;
+}
+
+.pill--side-sell {
+  border-color: #ef4444;
+  color: #fecdd3;
+}
+
+.orders-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 60;
+}
+
+.orders-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.orders-modal__card {
+  position: relative;
+  width: min(420px, 92vw);
+  background: #0b0b0b;
+  border: 1px solid #2f4b8f;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.orders-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.orders-modal__title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #e5e7eb;
+}
+
+.orders-modal__close {
+  border: none;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.orders-modal__body {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.orders-modal__line {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+}
+
+.orders-modal__note {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  color: #eab308;
+}
+
+.orders-modal__actions {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

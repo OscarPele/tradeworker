@@ -1,0 +1,116 @@
+.as-of {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+
+.context-group {
+  border: 1px solid #243b65;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  background: #0b0b0b;
+}
+
+.context-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+.metric-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid #2f4b8f;
+  background: #0f0f0f;
+  border-radius: 10px;
+  padding: 0.55rem 0.6rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.metric-label {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+.metric-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.metric-value {
+  margin: 0;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  color: #f9fafb;
+}
+
+.metric-value--up {
+  color: #4ade80;
+}
+
+.metric-value--down {
+  color: #f87171;
+}
+
+.metric-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.metric-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.metric-modal__card {
+  position: relative;
+  width: min(360px, 92vw);
+  background: #0b0b0b;
+  border: 1px solid #2f4b8f;
+  border-radius: 12px;
+  padding: 0.95rem 1rem;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+}
+
+.metric-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.metric-modal__close {
+  border: none;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.metric-modal__text {
+  margin: 0.6rem 0 0;
+  font-size: 0.92rem;
+  color: #f9fafb;
+  line-height: 1.5;
+}
