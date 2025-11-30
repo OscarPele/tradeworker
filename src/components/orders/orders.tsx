@@ -39,6 +39,12 @@ export default function Orders() {
       })
 
       setResult(data)
+      if (data.ocoOrder?.orderListId != null) {
+        localStorage.setItem('lastOcoOrderListId', String(data.ocoOrder.orderListId))
+      }
+      if (data.ocoOrder?.listClientOrderId) {
+        localStorage.setItem('lastOcoListClientOrderId', data.ocoOrder.listClientOrderId)
+      }
       setShowConfirm(false)
     } catch (err) {
       console.error(err)

@@ -32,6 +32,8 @@ export interface CreateOcoRequest {
 export interface OrderRef {
   orderId: number
   clientOrderId?: string
+  orderListId?: number
+  listClientOrderId?: string
   status?: string
   price?: string
   stopPrice?: string

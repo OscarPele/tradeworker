@@ -4,12 +4,38 @@
   margin-top: 0.35rem;
 }
 
+.open-order-group {
+  border: 1px solid #243b65;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  background: #0b0b0b;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.open-order-group--highlight {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+}
+
+.open-order-group__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.open-order-group__body {
+  display: grid;
+  gap: 0.45rem;
+}
+
 .open-order-row {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
   align-items: center;
-  border: 1px solid #243b65;
+  border: 1px solid #2f4b8f;
   background: #0f0f0f;
   border-radius: 10px;
   padding: 0.65rem 0.75rem;
